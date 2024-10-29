@@ -15,7 +15,7 @@ const getAllIncome = async (user_id) => {
         'SELECT * FROM receitas WHERE user_id = $1',
         [user_id]
     )
-    return rows[0]
+    return rows
 }
 
 const createIncome = async (user_id, titulo, descricao, valor, categoria_id, data_receita) => {
