@@ -1,4 +1,18 @@
-const { getAllIncome, createIncome } = require('../models/Receitas')
+const { getAllIncome, getTotalIncome, createIncome } = require('../models/Receitas')
+
+const totalIncome = async (req, res) => {
+    const { user_id } = req.params
+    const result = await getTotalIncome(user_id)
+    try {
+        if (result) {
+            res.status(200).json(result)
+        } else {
+            res.status(404).json({message: "Nenhuma receita encontrada"})
+        }
+    } catch (erro) {
+        res.status(500).json({ message: "Erro ao buscar receitas", error: erro.message })
+    }
+}
 
 const listIncome = async (req, res) => {
     const { user_id } = req.params
@@ -27,5 +41,6 @@ const createNewIncome = async (req, res) => {
 
 module.exports = {
     listIncome,
+    totalIncome,
     createNewIncome
 }

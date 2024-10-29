@@ -1,5 +1,15 @@
 const pool = require('../config/db')
 
+const getTotalIncome = async (user_id) => {
+    console.log(user_id);
+    
+    const { rows } = await pool.query(
+        'SELECT user_id, SUM(valor) AS valor_total FROM receitas WHERE user_id = $1 GROUP BY user_id',
+        [user_id]
+    )
+    return rows[0];
+}
+
 const getAllIncome = async (user_id) => {
     const { rows } = await pool.query(
         'SELECT * FROM receitas WHERE user_id = $1',
@@ -18,5 +28,6 @@ const createIncome = async (user_id, titulo, descricao, valor, categoria_id, dat
 
 module.exports = {
     getAllIncome,
+    getTotalIncome,
     createIncome
 }
